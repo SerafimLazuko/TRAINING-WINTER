@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QSortLogic", "QSort\QSortLo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QSortLogic.Tests", "QSortLogic.Tests\QSortLogic.Tests.csproj", "{C9AD463A-94E4-44F9-9061-6E54D11EDF7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergeSortLogic", "MergeSortLogic\MergeSortLogic.csproj", "{919603BF-F7C8-498C-8C15-D6C42D660B57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergeSortLogic.Tests", "MergeSortLogic.Tests\MergeSortLogic.Tests.csproj", "{C0328DD4-AE3B-4F17-B346-3696E2CDB877}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{C9AD463A-94E4-44F9-9061-6E54D11EDF7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9AD463A-94E4-44F9-9061-6E54D11EDF7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9AD463A-94E4-44F9-9061-6E54D11EDF7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{919603BF-F7C8-498C-8C15-D6C42D660B57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{919603BF-F7C8-498C-8C15-D6C42D660B57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{919603BF-F7C8-498C-8C15-D6C42D660B57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{919603BF-F7C8-498C-8C15-D6C42D660B57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0328DD4-AE3B-4F17-B346-3696E2CDB877}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0328DD4-AE3B-4F17-B346-3696E2CDB877}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0328DD4-AE3B-4F17-B346-3696E2CDB877}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0328DD4-AE3B-4F17-B346-3696E2CDB877}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
