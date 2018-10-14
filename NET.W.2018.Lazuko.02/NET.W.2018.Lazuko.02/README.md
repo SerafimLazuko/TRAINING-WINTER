@@ -32,7 +32,3 @@ public void MethodName_Number_Degree_Precision_ArgumentOutOfRangeException(doubl
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => ClassName.MethodName(number, degree, precision));
         }
-
-
-
-
