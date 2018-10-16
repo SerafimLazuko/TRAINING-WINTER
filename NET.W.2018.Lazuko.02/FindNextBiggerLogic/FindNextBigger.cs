@@ -3,12 +3,15 @@ using System.Linq;
 
 namespace FindNextBiggerNumberNamespace
 {
+
     /// <summary>
     /// Class containing methods for finding next bigger number 
     /// </summary>
     public static class FindNextBigger
     {
+
         #region Public API   
+
 
         /// <summary>
         ///  Public function. Gets number, returns bigger.
@@ -28,9 +31,12 @@ namespace FindNextBiggerNumberNamespace
 
         }
 
+
         #endregion
 
+
         #region Private API
+
 
         /// <summary>
         /// Main function. Performs calculations. 
@@ -70,6 +76,7 @@ namespace FindNextBiggerNumberNamespace
             return resultNumber;
         }
 
+
         /// <summary>
         /// Converts array to number.
         /// </summary>
@@ -86,6 +93,7 @@ namespace FindNextBiggerNumberNamespace
 
             return number;
         }
+
 
         /// <summary>
         /// Converts number to array.
@@ -107,6 +115,7 @@ namespace FindNextBiggerNumberNamespace
             return arrayOfDigits;
         }
 
+
         /// <summary>
         /// Sorts array from position to the end ascending 
         /// </summary>
@@ -126,6 +135,7 @@ namespace FindNextBiggerNumberNamespace
             }
         }
 
+
         /// <summary>
         /// Performs a swap
         /// </summary>
@@ -137,6 +147,7 @@ namespace FindNextBiggerNumberNamespace
             a = b;
             b = temp;
         }
+
 
         #endregion
     }

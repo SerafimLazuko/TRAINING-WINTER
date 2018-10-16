@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 namespace InsertNumberNamespace
 {
 
@@ -23,7 +24,7 @@ namespace InsertNumberNamespace
         /// <exception cref="System.ArgumentException"></exception>
         public static int InsertNumber(int numberSource, int numberIn, int posLeft, int posRight)
         {
-            if (numberSource <= 0 || numberIn <= 0 || posLeft < 0 || posRight < 0 || posLeft > 31 || posRight > 31) 
+            if (numberSource <= 0 || numberIn <= 0 || posLeft < 0 || posRight < 0 || posLeft > 31 || posRight > 31)
             {
                 throw new ArgumentException();
             }
@@ -51,11 +52,11 @@ namespace InsertNumberNamespace
         /// <returns></returns>
         private static int InsertIn(int numberSource, int numberIn, int posLeft, int posRight)
         {
-            
+
             int[] binarySource = DecimalToBinary(numberSource);
             int[] binaryIn = DecimalToBinary(numberIn);
 
-            for(int i = binarySource.Length - 1 - posLeft, j = binaryIn.Length - 1 ; i >= binarySource.Length - 1  - posRight; i-- , j--)
+            for (int i = binarySource.Length - 1 - posLeft, j = binaryIn.Length - 1; i >= binarySource.Length - 1 - posRight; i--, j--)
             {
                 binarySource[i] = binaryIn[j];
             }
@@ -74,7 +75,7 @@ namespace InsertNumberNamespace
         {
             int[] result = new int[32];
 
-            for(int i = result.Length - 1; number > 0; i--)
+            for (int i = result.Length - 1; number > 0; i--)
             {
                 result[i] = number % 2;
                 number /= 2;
@@ -90,13 +91,13 @@ namespace InsertNumberNamespace
         private static int BinaryToDecimal(int[] binarySource)
         {
             int result = 0;
-            
+
             int _base = 1;
 
-            for (int i = binarySource.Length-1; i >= 0; i--)
+            for (int i = binarySource.Length - 1; i >= 0; i--)
             {
                 result += binarySource[i] * _base;
-                
+
                 _base *= 2;
             }
 
