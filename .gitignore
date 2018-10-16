@@ -5,6 +5,7 @@
 
 *.csproj 
 *.sln
+*.config
 
 # User-specific files
 *.rsuser
