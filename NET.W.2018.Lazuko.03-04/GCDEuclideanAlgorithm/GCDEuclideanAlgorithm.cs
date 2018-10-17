@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GCDEuclideanAlgorithm
 {
     public static class GCDFinder
     {
-
+        
         #region Public Euclidean Algorithm overloads 
 
-        public static int EuclideanAlgorithm(params int[] numbers)
+        public static int EuclideanAlgorithm(params int[] numbers )
         {
+            DateTime inTime = DateTime.Now;
+
             if (numbers.Length <= 1) throw new ArgumentException(nameof(numbers));
             
             if (numbers == null) throw new ArgumentNullException(nameof(numbers));
@@ -25,17 +23,37 @@ namespace GCDEuclideanAlgorithm
                 result = FindGCD(result, numbers[i]);
             }
 
+            DateTime outTime = DateTime.Now;
+
+            TimeSpan requiredTime = outTime.Subtract(inTime);
+
             return result;
         }
 
         public static int EuclideanAlgorithm(int firstNumber, int secondNumber)
         {
-            return FindGCD(firstNumber, secondNumber);
+            DateTime inTime = DateTime.Now;
+
+            int result = FindGCD(firstNumber, secondNumber);
+
+            DateTime outTime = DateTime.Now;
+
+            TimeSpan requiredTime = outTime.Subtract(inTime);
+
+            return result;
         }
 
         public static int EuclideanAlgorithm(int firstNumber, int secondNumber, int thirdNumber)
         {
-            return FindGCD(FindGCD(firstNumber, secondNumber), thirdNumber);
+            DateTime inTime = DateTime.Now;
+
+            int result = FindGCD(FindGCD(firstNumber, secondNumber), thirdNumber);
+
+            DateTime outTime = DateTime.Now;
+
+            TimeSpan requiredTime = outTime.Subtract(inTime);
+
+            return result;
         }
 
         #endregion
@@ -44,6 +62,8 @@ namespace GCDEuclideanAlgorithm
 
         public static int BinaryEuclideanAlgorithm(params int[] numbers)
         {
+            DateTime inTime = DateTime.Now;
+
             if (numbers.Length <= 1) throw new ArgumentException(nameof(numbers));
 
             if (numbers == null) throw new ArgumentNullException(nameof(numbers));
@@ -56,17 +76,37 @@ namespace GCDEuclideanAlgorithm
                 result = FindGCD(result, numbers[i]);
             }
 
+            DateTime outTime = DateTime.Now;
+
+            TimeSpan requiredTime = outTime.Subtract(inTime);
+
             return result;
         }
 
         public static int BinaryEuclideanAlgorithm(int firstNumber, int secondNumber)
         {
-            return BinaryFindGCD(firstNumber, secondNumber);
+            DateTime inTime = DateTime.Now;
+
+            int result = BinaryFindGCD(firstNumber, secondNumber);
+
+            DateTime outTime = DateTime.Now;
+
+            TimeSpan requiredTime = outTime.Subtract(inTime);
+
+            return result;
         }
 
         public static int BinaryEuclideanAlgorithm(int firstNumber, int secondNumber, int thirdNumber)
         {
-            return BinaryFindGCD(FindGCD(firstNumber, secondNumber), thirdNumber);
+            DateTime inTime = DateTime.Now;
+
+            int result = BinaryFindGCD(BinaryFindGCD(firstNumber, secondNumber), thirdNumber);
+
+            DateTime outTime = DateTime.Now;
+
+            TimeSpan requiredTime = outTime.Subtract(inTime);
+
+            return result;
         }
 
         #endregion
@@ -75,6 +115,8 @@ namespace GCDEuclideanAlgorithm
         
         private static int BinaryFindGCD(int firstNumber, int secondNumber)
         {
+            if (firstNumber == 0 && secondNumber == 0)
+                throw new ArgumentException($"{firstNumber} and {secondNumber} = 0, invalid arguments");
 
             if (firstNumber == 0) return secondNumber;
             if (secondNumber == 0) return firstNumber;
