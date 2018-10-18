@@ -10,20 +10,30 @@ namespace StringExtension
     {
         public static string DoubleToStringConventer(double number)
         {
-            return DoubleToBinary(number);
+            return DoubleToString(number);
         }
 
-        private static string DoubleToBinary(double number)
+        private static string DoubleToString(double number)
         {
             int sign = 0;
             int exponenta = 0;
 
+            DoubleToNormalizedForm(ref number, ref sign, ref exponenta);
+
+            int[] normalizedInBinaryForm = DoubleNormilizedToBinary(number);
+
+            Tuple<int ,int[], int> normalizedFormTuple = new Tuple<int, int[], int>(sign, normalizedInBinaryForm, exponenta);
+            
+            return string.Join("", BinaryToIEEEFormat(normalizedFormTuple)); 
+        }
+
+        private static void DoubleToNormalizedForm(ref double number, ref int sign, ref int exponenta)
+        {
             if (number < 0)
             {
                 number *= -1;
                 sign = 1;
             }
-
 
             if (number < 1.0)
                 while (number < 1)
@@ -38,19 +48,17 @@ namespace StringExtension
                     exponenta += 1;
                 }
 
-
-            Tuple<int ,int[], int> normalizedForm = new Tuple<int, int[], int>(sign, DoubleNormilizedToBinary(number), exponenta);
-            
-            return string.Join("", BinaryToIEEEFormat(normalizedForm)); 
         }
 
         private static int[] BinaryToIEEEFormat(Tuple<int, int[], int> normalizedForm)
         {
+
             int[] order = IntToBinary(normalizedForm.Item3 + 1023);
 
             int[] mantissa = normalizedForm.Item2;
 
             int sign = normalizedForm.Item1;
+
 
             int[] result = new int[64];
 
@@ -99,7 +107,6 @@ namespace StringExtension
 
             return binaryArray;
         }
-
-
+        
     }
 }
