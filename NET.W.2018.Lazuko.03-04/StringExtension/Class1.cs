@@ -99,5 +99,6 @@ namespace StringExtension
 
             return binaryArray;
         }
+
     }
 }
