@@ -1,34 +1,37 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using static GCDEuclideanAlgorithm.GCDFinder;
 
-namespace GCDTests
+namespace GCDTestsNUnit
 {
-    [TestClass]
-    public class UnitTests
-    {
-        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public int EuclideanAlgorithm_ReceivesNull_ThrowArgumentNullException()
-        {
-            int[] numbers = null;
-
-            return EuclideanAlgorithm(numbers);
-        }
-
-        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public int BinaryEuclideanAlgorithm_ReceivesNull_ThrowArgumentNullException()
-        {
-            int[] numbers = null;
-
-            return BinaryEuclideanAlgorithm(numbers);
-
-        }
-    }
-
     [TestFixture]
     public class NUnitTests
     {
+        [Test]
+        public void GCDEuclideanAlgorithm_ReceivesNull_ThrowsException()
+        {
+           Assert.Throws<ArgumentNullException>(() => EuclideanAlgorithm(null));
+        }
+
+        [Test]
+        public void GCDEuclideanAlgorithm_ReceivesEmptyArray_ThrowsException()
+        {
+            int[] arr = new int[0];
+            Assert.Throws<ArgumentException>(() => EuclideanAlgorithm(arr));
+        }
+
+        [Test]
+        public void GCDEuclideanAlgorithm_ReceivesTwoElementsEqualsNull_ThrowsException()
+        {
+            Assert.Throws<ArgumentException>(() => EuclideanAlgorithm(0,0));
+        }
+
+        [Test]
+        public void BinaryEuclideanAlgorithm_ReceivesNull_ThrowsException()
+        {
+            Assert.Throws<ArgumentNullException>(() => BinaryEuclideanAlgorithm(null));
+        }
+
 
         [TestCase(11, 33, 66, 0, 110, ExpectedResult = 11)]
         [TestCase(11, 33, 66, 99, 110, ExpectedResult = 11)]

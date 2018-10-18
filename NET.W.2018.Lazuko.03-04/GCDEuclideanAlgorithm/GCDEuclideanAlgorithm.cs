@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+
 
 namespace GCDEuclideanAlgorithm
 {
@@ -9,12 +11,13 @@ namespace GCDEuclideanAlgorithm
 
         public static int EuclideanAlgorithm(params int[] numbers )
         {
-            DateTime inTime = DateTime.Now;
+            if (numbers == null) throw new ArgumentNullException(nameof(numbers));
 
             if (numbers.Length <= 1) throw new ArgumentException(nameof(numbers));
-            
-            if (numbers == null) throw new ArgumentNullException(nameof(numbers));
-            
+
+            Stopwatch timeSpan = new Stopwatch();
+
+            timeSpan.Start();
 
             int result = 0;
 
@@ -23,35 +26,35 @@ namespace GCDEuclideanAlgorithm
                 result = FindGCD(result, numbers[i]);
             }
 
-            DateTime outTime = DateTime.Now;
+            timeSpan.Stop();
 
-            TimeSpan requiredTime = outTime.Subtract(inTime);
+            var elapsedTime = timeSpan.Elapsed;
 
             return result;
         }
 
         public static int EuclideanAlgorithm(int firstNumber, int secondNumber)
         {
-            DateTime inTime = DateTime.Now;
+            Stopwatch timeSpan = new Stopwatch();
+
+            timeSpan.Start();
 
             int result = FindGCD(firstNumber, secondNumber);
 
-            DateTime outTime = DateTime.Now;
-
-            TimeSpan requiredTime = outTime.Subtract(inTime);
+            var elapsedTime = timeSpan.Elapsed;
 
             return result;
         }
 
         public static int EuclideanAlgorithm(int firstNumber, int secondNumber, int thirdNumber)
         {
-            DateTime inTime = DateTime.Now;
+            Stopwatch timeSpan = new Stopwatch();
 
+            timeSpan.Start();
+            
             int result = FindGCD(FindGCD(firstNumber, secondNumber), thirdNumber);
 
-            DateTime outTime = DateTime.Now;
-
-            TimeSpan requiredTime = outTime.Subtract(inTime);
+            var elapsedTime = timeSpan.Elapsed;
 
             return result;
         }
@@ -62,12 +65,14 @@ namespace GCDEuclideanAlgorithm
 
         public static int BinaryEuclideanAlgorithm(params int[] numbers)
         {
-            DateTime inTime = DateTime.Now;
-
-            if (numbers.Length <= 1) throw new ArgumentException(nameof(numbers));
 
             if (numbers == null) throw new ArgumentNullException(nameof(numbers));
 
+            if (numbers.Length <= 1) throw new ArgumentException(nameof(numbers));
+            
+            Stopwatch timeSpan = new Stopwatch();
+
+            timeSpan.Start();
 
             int result = 0;
 
@@ -76,35 +81,33 @@ namespace GCDEuclideanAlgorithm
                 result = FindGCD(result, numbers[i]);
             }
 
-            DateTime outTime = DateTime.Now;
-
-            TimeSpan requiredTime = outTime.Subtract(inTime);
+            var elapsedTime = timeSpan.Elapsed;
 
             return result;
         }
 
         public static int BinaryEuclideanAlgorithm(int firstNumber, int secondNumber)
         {
-            DateTime inTime = DateTime.Now;
+            Stopwatch timeSpan = new Stopwatch();
+
+            timeSpan.Start();
 
             int result = BinaryFindGCD(firstNumber, secondNumber);
 
-            DateTime outTime = DateTime.Now;
-
-            TimeSpan requiredTime = outTime.Subtract(inTime);
+            var elapsedTime = timeSpan.Elapsed;
 
             return result;
         }
 
         public static int BinaryEuclideanAlgorithm(int firstNumber, int secondNumber, int thirdNumber)
         {
-            DateTime inTime = DateTime.Now;
+            Stopwatch timeSpan = new Stopwatch();
 
+            timeSpan.Start();
+            
             int result = BinaryFindGCD(BinaryFindGCD(firstNumber, secondNumber), thirdNumber);
 
-            DateTime outTime = DateTime.Now;
-
-            TimeSpan requiredTime = outTime.Subtract(inTime);
+            var elapsedTime = timeSpan.Elapsed;
 
             return result;
         }
@@ -115,13 +118,14 @@ namespace GCDEuclideanAlgorithm
         
         private static int BinaryFindGCD(int firstNumber, int secondNumber)
         {
+         
             if (firstNumber == 0 && secondNumber == 0)
                 throw new ArgumentException($"{firstNumber} and {secondNumber} = 0, invalid arguments");
 
             if (firstNumber == 0) return secondNumber;
             if (secondNumber == 0) return firstNumber;
 
-            NumbersRefactor(firstNumber, secondNumber, out firstNumber, out secondNumber);
+            NumbersRefactor(ref firstNumber,ref secondNumber);
 
             int k = 1;
 
@@ -152,10 +156,13 @@ namespace GCDEuclideanAlgorithm
         private static int FindGCD(int firstNumber, int secondNumber)
         {
 
+            if (firstNumber == 0 && secondNumber == 0)
+                throw new ArgumentException($"{firstNumber} and {secondNumber} = 0, invalid arguments");
+
             if (firstNumber == 0) return secondNumber;
             if (secondNumber == 0) return firstNumber;
 
-            NumbersRefactor(firstNumber, secondNumber, out firstNumber, out secondNumber);
+            NumbersRefactor(ref firstNumber, ref secondNumber);
 
             int Finder(int big, int small)
             {
@@ -167,11 +174,8 @@ namespace GCDEuclideanAlgorithm
                     rest = big;
                 }
 
-                if (rest == 0)
-                {
-                    return small;
-                }
-
+                if (rest == 0) return small;
+                
                 else
                 {
                     big = small;
@@ -186,24 +190,17 @@ namespace GCDEuclideanAlgorithm
 
         }
         
-        private static void NumbersRefactor(int inFirst, int inSecond ,out int firstNumber, out int secondNumber)
+        private static void NumbersRefactor(ref int firstNumber, ref int secondNumber)
         {
-            if (inFirst < 0) inFirst *= -1;
-            if (inSecond < 0) inSecond *= -1;
+            if (firstNumber < 0) firstNumber *= -1;
+            if (secondNumber < 0) secondNumber *= -1;
 
-            if (inFirst < inSecond)
+            if (firstNumber < secondNumber)
             {
-                firstNumber = inSecond;
-                secondNumber = inFirst;
-                return;
+                int temp = firstNumber;
+                firstNumber = secondNumber;
+                secondNumber = temp;
             }
-            else
-            {
-                firstNumber = inFirst;
-                secondNumber = inSecond;
-                return;
-            }
-
         }
         
         #endregion
