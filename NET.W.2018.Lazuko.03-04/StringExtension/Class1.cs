@@ -10,7 +10,6 @@ namespace StringExtension
     {
         public static string DoubleToStringConventer(double number)
         {
-
             return DoubleToBinary(number);
         }
 
@@ -35,20 +34,13 @@ namespace StringExtension
             else
                 while (number >= 10)
                 {
-                    number *= -10;
+                    number /= 10;
                     exponenta += 1;
                 }
 
 
             Tuple<int ,int[], int> normalizedForm = new Tuple<int, int[], int>(sign, DoubleNormilizedToBinary(number), exponenta);
-
             
-           // string sd = string.Join("", BinaryToIEEEFormat(normalizedForm));
-
-            
-
-            
-
             return string.Join("", BinaryToIEEEFormat(normalizedForm)); 
         }
 
@@ -81,16 +73,16 @@ namespace StringExtension
         {
             int[] binaryArray = new int[52];
 
-            binaryArray[0] = (int)number % 10;
+            binaryArray[0] = 1;
 
-            number -= binaryArray[0];
+            number -= (int) number % 10;
 
             for(int i = 1; i < binaryArray.Length; i++)
             {
                 binaryArray[i] = (int) (2 * number) % 10;
                 number *= 2;
 
-                if (number >= 1) number -= number % 10;
+                if (number >= 1) number -= (int) number % 10;
             }
             return binaryArray;
         }
