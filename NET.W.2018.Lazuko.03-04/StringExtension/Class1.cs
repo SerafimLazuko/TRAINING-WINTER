@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace StringExtension
+namespace DoubleExtensionLogic
 {
-    public static class StringExtension
+    public static class DoubleExtension
     {
-        public static string DoubleToStringConventer(double number)
+        public static string DoubleToBinaryString(double number)
         {
             return DoubleToString(number);
         }
@@ -18,46 +14,64 @@ namespace StringExtension
             int sign = 0;
             int exponenta = 0;
 
-            DoubleToNormalizedForm(ref number, ref sign, ref exponenta);
+            if (number < 0) { sign = 1; number *= -1; }
 
-            int[] normalizedInBinaryForm = DoubleNormilizedToBinary(number);
+            int[] numberBinaryForm = DoubleToBinary(number, ref exponenta);
 
-            Tuple<int ,int[], int> normalizedFormTuple = new Tuple<int, int[], int>(sign, normalizedInBinaryForm, exponenta);
+            exponenta--;
             
-            return string.Join("", BinaryToIEEEFormat(normalizedFormTuple)); 
-        }
+            Tuple<int, int, int[]> normalizedFormTuple = new Tuple<int, int, int[]>(sign, exponenta, numberBinaryForm);
 
-        private static void DoubleToNormalizedForm(ref double number, ref int sign, ref int exponenta)
+            return string.Join("", BinaryToIEEEFormat(normalizedFormTuple));
+        }
+        
+        private static int[] DoubleToBinary(double number, ref int exponenta)
         {
-            if (number < 0)
+            int[] binaryArray = new int[53];
+
+            double numberFrPart = number % 1;
+            double numberIntPart = number - numberFrPart;
+            
+            for (int i = 0; i < binaryArray.Length; i++)
             {
-                number *= -1;
-                sign = 1;
+                if (numberIntPart > 1)
+                {
+                    binaryArray[i] = (int)(number % 2);
+                    numberIntPart /= 2;
+                    exponenta++;
+                }
+                else
+                {
+                    binaryArray[i] = (int)(numberFrPart * 2) % 10;
+
+                    numberFrPart *= 2.0;
+
+                    while (numberFrPart >= 1) numberFrPart -= 1.0;
+                }
             }
 
-            if (number < 1.0)
-                while (number < 1)
-                {
-                    number *= 10;
-                    exponenta -= 1;
-                }
-            else
-                while (number >= 10)
-                {
-                    number /= 10;
-                    exponenta += 1;
-                }
-
+            return binaryArray;
         }
 
-        private static int[] BinaryToIEEEFormat(Tuple<int, int[], int> normalizedForm)
+        private static int[] OrderToBinary(int number)
         {
+            int[] array = new int[11];
 
-            int[] order = IntToBinary(normalizedForm.Item3 + 1023);
+            for (int i = array.Length - 1; i >= 0; i--)
+            {
+                array[i] = number % 2;
+                number = number / 2;
+            }
+            return array;
+        }
 
-            int[] mantissa = normalizedForm.Item2;
-
+        private static int[] BinaryToIEEEFormat(Tuple<int, int, int[]> normalizedForm)
+        {
             int sign = normalizedForm.Item1;
+
+            int[] order = OrderToBinary(normalizedForm.Item2 + 1023);
+
+            int[] mantissa = normalizedForm.Item3;
 
 
             int[] result = new int[64];
@@ -71,42 +85,11 @@ namespace StringExtension
                     result[i] = order[i - 1];
 
                 if (i > 11)
-                    result[i] = mantissa[i - 12];
+                    result[i] = mantissa[i - 11];
             }
-            
+
             return result;
         }
 
-        private static int[] DoubleNormilizedToBinary(double number)
-        {
-            int[] binaryArray = new int[52];
-
-            binaryArray[0] = 1;
-
-            number -= (int) number % 10;
-
-            for(int i = 1; i < binaryArray.Length; i++)
-            {
-                binaryArray[i] = (int) (2 * number) % 10;
-                number *= 2;
-
-                if (number >= 1) number -= (int) number % 10;
-            }
-            return binaryArray;
-        }
-
-        private static int[] IntToBinary(int number)
-        {
-            int[] binaryArray = new int[11];
-
-            for(int i = 0; i < binaryArray.Length; i++)
-            {
-                binaryArray[i] = number % 2;
-                number = number / 2;
-            }
-
-            return binaryArray;
-        }
-        
     }
 }
