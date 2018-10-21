@@ -1,4 +1,5 @@
-﻿namespace BubbleSortJaggedArrayLogic
+﻿using System;
+namespace BubbleSortJaggedArrayLogic
 {
     /// <summary>
     /// Provides API for executing bubble sorting
@@ -12,6 +13,9 @@
         /// <param name="jaggedArray">The jagged array.</param>
         public static void SortInSumsAscending(int[][] jaggedArray)
         {
+            if (jaggedArray == null)
+                throw new ArgumentNullException(nameof(jaggedArray));
+
             for(int i = 0; i < jaggedArray.Length; i++)
             {
                 for(int j = 0; j < jaggedArray.Length; j++)
@@ -30,6 +34,9 @@
         /// <param name="jaggedArray">The jagged array.</param>
         public static void SortInSumsDescending(int[][] jaggedArray)
         {
+            if (jaggedArray == null)
+                throw new ArgumentNullException(nameof(jaggedArray));
+
             for (int i = 0; i < jaggedArray.Length; i++)
             {
                 for (int j = 0; j < jaggedArray.Length; j++)
@@ -48,7 +55,10 @@
         /// <param name="jaggedArray">The jagged array.</param>
         public static void SortInMaxValAscending(int[][] jaggedArray)
         {
-            for(int i = 0; i < jaggedArray.Length; i++)
+            if (jaggedArray == null)
+                throw new ArgumentNullException(nameof(jaggedArray));
+
+            for (int i = 0; i < jaggedArray.Length; i++)
             {
                 for(int j = 0; j < jaggedArray.Length; j++)
                 {
@@ -64,6 +74,9 @@
         /// <param name="jaggedArray">The jagged array.</param>
         public static void SortInMaxValDescending(int[][] jaggedArray)
         {
+            if (jaggedArray == null)
+                throw new ArgumentNullException(nameof(jaggedArray));
+
             for (int i = 0; i < jaggedArray.Length; i++)
             {
                 for (int j = 0; j < jaggedArray.Length; j++)
@@ -80,6 +93,9 @@
         /// <param name="jaggedArray">The jagged array.</param>
         public static void SortInMinValAscending(int[][] jaggedArray)
         {
+            if (jaggedArray == null)
+                throw new ArgumentNullException(nameof(jaggedArray));
+
             for (int i = 0; i < jaggedArray.Length; i++)
             {
                 for (int j = 0; j < jaggedArray.Length; j++)
@@ -96,6 +112,9 @@
         /// <param name="jaggedArray">The jagged array.</param>
         public static void SortInMinValDescending(int[][] jaggedArray)
         {
+            if (jaggedArray == null)
+                throw new ArgumentNullException(nameof(jaggedArray));
+
             for (int i = 0; i < jaggedArray.Length; i++)
             {
                 for (int j = 0; j < jaggedArray.Length; j++)
