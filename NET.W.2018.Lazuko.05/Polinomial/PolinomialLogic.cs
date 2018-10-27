@@ -5,17 +5,15 @@ namespace PolynomialLogic
 {
     public sealed class Polynomial 
     {
-        readonly int[] coefficients;
+        readonly double[] coefficients;
 
-        public int[] Coefficiants
+        public double[] Coefficiants
         {
             get => coefficients;
             set => Array.Copy(value, coefficients, value.Length);
         }
-
-        public Polynomial() : this(null) { }
-
-        public Polynomial(int[] coefficients)
+        
+        public Polynomial(double[] coefficients)
         {
             this.coefficients = coefficients;
         }
@@ -43,7 +41,7 @@ namespace PolynomialLogic
                 throw new ArgumentException($"{polynom1} length is not equal to {polynom2} length");
             }
 
-            int[] result = new int[polynom1.Coefficiants.Length];
+            double[] result = new double[polynom1.Coefficiants.Length];
 
             for (int i = 0; i < polynom1.Coefficiants.Length; i++)
             {
@@ -63,7 +61,7 @@ namespace PolynomialLogic
                 throw new ArgumentException($"{polynom1} length is not equal to {polynom2} length");
             }
 
-            int[] result = new int[polynom1.Coefficiants.Length];
+            double[] result = new double[polynom1.Coefficiants.Length];
 
             for (int i = 0; i < polynom1.Coefficiants.Length; i++)
             {
@@ -78,7 +76,7 @@ namespace PolynomialLogic
             if (polynom1 == null || polynom2 == null)
                 throw new ArgumentNullException();
 
-            int[] result = new int[polynom1.Coefficiants.Length + polynom1.Coefficiants.Length - 1];
+            double[] result = new double[polynom1.Coefficiants.Length + polynom1.Coefficiants.Length - 1];
 
             for (int i = 0; i < polynom1.Coefficiants.Length; i++)
             {
@@ -96,7 +94,7 @@ namespace PolynomialLogic
             if (polynom == null)
                 throw new ArgumentNullException();
 
-            int[] result = new int[polynom.Coefficiants.Length];
+            double[] result = new double[polynom.Coefficiants.Length];
 
             for (int i = 0; i < polynom.Coefficiants.Length; i++)
             {
@@ -114,7 +112,7 @@ namespace PolynomialLogic
             if (number == 0)
                 throw new ArgumentException($"{number} must be > 0");
 
-            int[] result = new int[polynom.Coefficiants.Length];
+            double[] result = new double[polynom.Coefficiants.Length];
 
             for (int i = 0; i < polynom.Coefficiants.Length; i++)
             {
@@ -126,7 +124,7 @@ namespace PolynomialLogic
 
         public static bool operator ==(Polynomial polynom1, Polynomial polynom2)
         {
-            if (polynom1 == null || polynom2 == null)
+            if (polynom1 is null || polynom2 is null) 
                 throw new ArgumentNullException();
 
             for (int i = 0; i < polynom1.Coefficiants.Length; i++)
@@ -138,7 +136,7 @@ namespace PolynomialLogic
 
         public static bool operator !=(Polynomial polynom1, Polynomial polynom2)
         {
-            if (polynom1 == null || polynom2 == null)
+            if (polynom1 is null || polynom2 is null)
                 throw new ArgumentNullException();
 
             return !polynom1.Equals(polynom2);
@@ -167,7 +165,7 @@ namespace PolynomialLogic
 
             Polynomial polynomial = obj as Polynomial;
 
-            if (polynomial == null)
+            if (polynomial is null) 
             {
                 return false;
             }
@@ -190,7 +188,7 @@ namespace PolynomialLogic
 
         public override int GetHashCode()
         {
-            return 1112971371 + EqualityComparer<int[]>.Default.GetHashCode(coefficients);
+            return 1112971371 + EqualityComparer<double[]>.Default.GetHashCode(coefficients);
         }
     }
 } 

@@ -10,8 +10,8 @@ namespace PolynomialLogic.Tests
         [TestMethod]
         public void EqualsTest_ChecksIfPolynom1EqualToPolynom2_ReturnBool()
         {
-            Polynomial polinom1 = new Polynomial(new int[5] { 1, 2, 3, 4, 5 });
-            Polynomial polinom2 = new Polynomial(new int[5] { 1, 2, 3, 4, 5 });
+            Polynomial polinom1 = new Polynomial(new double[5] { 1, 2, 3, 4, 5 });
+            Polynomial polinom2 = new Polynomial(new double[5] { 1, 2, 3, 4, 5 });
 
             bool expected = true;
 
