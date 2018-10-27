@@ -1,95 +1,65 @@
-﻿using System;
+﻿using System.Text;
+using System;
+using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace DoubleExtensionLogic
 {
-    public static class DoubleExtension
+    /// <summary>
+    /// DoubleExtension class
+    /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
+    public class Number
     {
-        public static string DoubleToBinaryString(double number)
-        {
-            return DoubleToString(number);
-        }
+        [FieldOffset(0)]
+        private double doubleNumber;
 
-        private static string DoubleToString(double number)
-        {
-            int sign = 0;
-            int exponenta = 0;
-
-            if (number < 0) { sign = 1; number *= -1; }
-
-            int[] numberBinaryForm = DoubleToBinary(number, ref exponenta);
-
-            exponenta--;
-            
-            Tuple<int, int, int[]> normalizedFormTuple = new Tuple<int, int, int[]>(sign, exponenta, numberBinaryForm);
-
-            return string.Join("", BinaryToIEEEFormat(normalizedFormTuple));
-        }
+        [FieldOffset(0)]
+        private readonly long intNumber;
         
-        private static int[] DoubleToBinary(double number, ref int exponenta)
+        public double DoubleNumber { get => doubleNumber; set => doubleNumber = value; }
+
+        public long IntNumber { get => intNumber; }
+
+        public Number(double number)
         {
-            int[] binaryArray = new int[53];
-
-            double numberFrPart = number % 1;
-            double numberIntPart = number - numberFrPart;
-            
-            for (int i = 0; i < binaryArray.Length; i++)
-            {
-                if (numberIntPart > 1)
-                {
-                    binaryArray[i] = (int)(number % 2);
-                    numberIntPart /= 2;
-                    exponenta++;
-                }
-                else
-                {
-                    binaryArray[i] = (int)(numberFrPart * 2) % 10;
-
-                    numberFrPart *= 2.0;
-
-                    while (numberFrPart >= 1) numberFrPart -= 1.0;
-                }
-            }
-
-            return binaryArray;
+            DoubleNumber = number;
         }
 
-        private static int[] OrderToBinary(int number)
+        /// <summary>
+        /// Represent Doubles to string IEEE754 format.
+        /// </summary>
+        /// <param name="number">The number.</param>
+        /// <returns></returns>
+        public string DoubleToIEEE754Format(Number number)
         {
-            int[] array = new int[11];
+            string result = StringRepresentation(number.intNumber).ToString();
 
-            for (int i = array.Length - 1; i >= 0; i--)
-            {
-                array[i] = number % 2;
-                number = number / 2;
-            }
-            return array;
+            char[] charArray = result.ToCharArray();
+
+            Array.Reverse(charArray);
+
+            return new string(charArray);
+
         }
 
-        private static int[] BinaryToIEEEFormat(Tuple<int, int, int[]> normalizedForm)
+        /// <summary>
+        /// Private method
+        /// </summary>
+        /// <param name="longNumber">The long number.</param>
+        /// <returns></returns>
+        private StringBuilder StringRepresentation(long longNumber )
         {
-            int sign = normalizedForm.Item1;
+            StringBuilder result = new StringBuilder();
 
-            int[] order = OrderToBinary(normalizedForm.Item2 + 1023);
+            int i = 0;
 
-            int[] mantissa = normalizedForm.Item3;
-
-
-            int[] result = new int[64];
-
-            for (int i = 0; i < result.Length; i++)
-            {
-                if (i == 0)
-                    result[i] = sign;
-
-                if (i > 0 && i <= 11)
-                    result[i] = order[i - 1];
-
-                if (i > 11)
-                    result[i] = mantissa[i - 11];
-            }
+            for(int j = 0; j < 64; j++)
+            { 
+                result.Append((longNumber >> i++) & 1);
+            } 
 
             return result;
         }
-
     }
 }
