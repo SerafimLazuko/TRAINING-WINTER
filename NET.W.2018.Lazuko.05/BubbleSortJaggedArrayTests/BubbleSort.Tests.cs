@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static BubbleSortJaggedArrayLogic.BubbleSort;
+using BubbleSortJaggedArray.Sorts;
 
 namespace BubbleSortJaggedArrayTests
 {
@@ -26,7 +27,9 @@ namespace BubbleSortJaggedArrayTests
             expected[3] = new int[3] { 10, 6, 8 };
             expected[4] = new int[5] { 9, 2, 11, 7, 9 };
 
-            SortInSumsAscending(actual);
+            ISorter sorter = new SortInSumsAscending();
+
+            PerformSort(sorter , actual);
 
             EqualCheck(expected, actual);
         }
@@ -50,7 +53,9 @@ namespace BubbleSortJaggedArrayTests
             expected[3] = new int[4] { 2, 0, 6, 0 };
             expected[4] = new int[2] { 2, 4 };
 
-            SortInSumsAscending(actual);
+            ISorter sorter = new SortInSumsDescending();
+
+            PerformSort(sorter, actual);
 
             EqualCheck(expected, actual);
         }
@@ -74,7 +79,9 @@ namespace BubbleSortJaggedArrayTests
             expected[3] = new int[3] { 10, 6, 8 };
             expected[4] = new int[5] { 9, 2, 11, 7, 9 };
 
-            SortInSumsAscending(actual);
+            ISorter sorter = new SortInMaxValAscending();
+
+            PerformSort(sorter, actual);
 
             EqualCheck(expected, actual);
         }
@@ -98,7 +105,9 @@ namespace BubbleSortJaggedArrayTests
             expected[3] = new int[4] { 2, 0, 6, 0 };
             expected[4] = new int[2] { 2, 4 };
 
-            SortInSumsAscending(actual);
+            ISorter sorter = new SortInMaxValDescending();
+
+            PerformSort(sorter, actual);
 
             EqualCheck(expected, actual);
         }
