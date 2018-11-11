@@ -1,7 +1,6 @@
-﻿using System.Text;
-using System;
+﻿using System;
+using System.Text;
 using System.Runtime.InteropServices;
-using System.Collections.Generic;
 
 namespace DoubleExtensionLogic
 {
@@ -11,6 +10,8 @@ namespace DoubleExtensionLogic
     [StructLayout(LayoutKind.Explicit)]
     public class Number
     {
+        #region Fields & Properties
+
         [FieldOffset(0)]
         private double doubleNumber;
 
@@ -21,10 +22,18 @@ namespace DoubleExtensionLogic
 
         public long IntNumber { get => intNumber; }
 
+        #endregion
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="number"></param>
         public Number(double number)
         {
             DoubleNumber = number;
         }
+
+        #region API
 
         /// <summary>
         /// Represent Doubles to string IEEE754 format.
@@ -38,9 +47,8 @@ namespace DoubleExtensionLogic
             char[] charArray = result.ToCharArray();
 
             Array.Reverse(charArray);
-
+            
             return new string(charArray);
-
         }
 
         /// <summary>
@@ -61,5 +69,7 @@ namespace DoubleExtensionLogic
 
             return result;
         }
+
+        #endregion
     }
 }

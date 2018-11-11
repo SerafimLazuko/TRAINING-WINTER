@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
 
-
 namespace GCDEuclideanAlgorithm
 {
+    /// <summary>
+    /// Provides API for finding GCD
+    /// </summary>
     public static class GCDFinder
     {
-        
         #region Public Euclidean Algorithm overloads 
 
         public static int EuclideanAlgorithm(params int[] numbers )
@@ -202,8 +203,7 @@ namespace GCDEuclideanAlgorithm
                 secondNumber = temp;
             }
         }
-        
-        #endregion
 
+        #endregion
     }
 }
