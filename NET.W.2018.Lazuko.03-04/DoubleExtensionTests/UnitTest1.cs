@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace DoubleExtensionTests
 {
@@ -25,10 +24,5 @@ namespace DoubleExtensionTests
             DoubleExtensionLogic.Number num = new DoubleExtensionLogic.Number(number);
             return  num.DoubleToIEEE754Format(num);
         }
-
-
-
-
-
     }
 }
