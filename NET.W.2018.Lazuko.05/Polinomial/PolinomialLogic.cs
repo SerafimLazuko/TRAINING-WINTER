@@ -3,8 +3,13 @@ using System.Collections.Generic;
 
 namespace PolynomialLogic
 {
+    /// <summary>
+    /// Class providing API for work with polynomials
+    /// </summary>
     public sealed class Polynomial 
     {
+        #region Fields & Properties
+
         readonly double[] coefficients;
 
         public double[] Coefficiants
@@ -12,11 +17,20 @@ namespace PolynomialLogic
             get => coefficients;
             set => Array.Copy(value, coefficients, value.Length);
         }
-        
+
+        #endregion
+
+        /// <summary>
+        /// Constructor
+        /// Initializes a new instance of the <see cref="Polynomial"/> class.
+        /// </summary>
+        /// <param name="coefficients">The coefficients.</param>
         public Polynomial(double[] coefficients)
         {
             this.coefficients = coefficients;
         }
+
+        #region API and Operations
 
         public double GetValue(double x)
         {
@@ -142,6 +156,14 @@ namespace PolynomialLogic
             return !polynom1.Equals(polynom2);
         }
 
+        #endregion
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             string[] stringFormat = new string[Coefficiants.Length];
@@ -155,7 +177,14 @@ namespace PolynomialLogic
 
             return string.Join($"+", stringFormat, 0, stringFormat.Length);
         }
-        
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns>
+        /// true if the specified object  is equal to the current object; otherwise, false.
+        /// </returns>
         public override bool Equals(Object obj)
         {
             if (obj == null)
@@ -186,6 +215,12 @@ namespace PolynomialLogic
             return true;
         }
 
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
         public override int GetHashCode()
         {
             return 1112971371 + EqualityComparer<double[]>.Default.GetHashCode(coefficients);

@@ -2,8 +2,17 @@
 
 namespace BubbleSortJaggedArray.Sorts
 {
+    /// <summary>
+    /// Provides functionality for sorting in according to required condition.
+    /// </summary>
+    /// <seealso cref="BubbleSortJaggedArray.Sorts.ISorter" />
     public class SortInMinValAscending : ISorter
     {
+        /// <summary>
+        /// Sort method.
+        /// </summary>
+        /// <param name="jaggedArray">The jagged array.</param>
+        /// <exception cref="System.ArgumentNullException">jaggedArray</exception>
         void ISorter.Sort(int[][] jaggedArray)
         {
             if (jaggedArray == null)
@@ -19,6 +28,11 @@ namespace BubbleSortJaggedArray.Sorts
             }
         }
 
+        /// <summary>
+        /// Finds the min element in array.
+        /// </summary>
+        /// <param name="array">The array.</param>
+        /// <returns></returns>
         private static int FindMin(int[] array)
         {
             int result = array[0];
@@ -29,6 +43,12 @@ namespace BubbleSortJaggedArray.Sorts
             return result;
         }
 
+        /// <summary>
+        /// Swaps the rows.
+        /// </summary>
+        /// <param name="jaggedArray">The jagged array.</param>
+        /// <param name="i">The i.</param>
+        /// <param name="j">The j.</param>
         private static void SwapRows(ref int[][] jaggedArray, int i, int j)
         {
             int[] temp = jaggedArray[i];

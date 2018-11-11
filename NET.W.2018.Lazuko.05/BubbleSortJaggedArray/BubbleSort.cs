@@ -1,5 +1,4 @@
-﻿using System;
-using BubbleSortJaggedArray.Sorts;
+﻿using BubbleSortJaggedArray.Sorts;
 
 namespace BubbleSortJaggedArrayLogic
 {
@@ -8,7 +7,12 @@ namespace BubbleSortJaggedArrayLogic
     /// </summary>
     public static  class BubbleSort
     {
-        public static void PerformSort(ISorter sorter, int[][] jaggedArray)
+        /// <summary>
+        /// Performs the sort according to the sorter
+        /// </summary>
+        /// <param name="sorter">The sorter.</param>
+        /// <param name="jaggedArray">The jagged array.</param>
+        public static void PerformSort(ISorter sorter, ref int[][] jaggedArray)
         {
             sorter.Sort(jaggedArray);
         }
