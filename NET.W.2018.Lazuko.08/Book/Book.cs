@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using System.Collections;
-
 
 namespace BookLogic
 {
-    public class Book : IComparable 
+    /// <summary>
+    /// Class describing the state of the object "book"
+    /// </summary>
+    public class Book
     {
         #region Fields
 
@@ -16,8 +17,6 @@ namespace BookLogic
         private int publishingYear;
         private int pagesNumber;
         private int price;
-
-        
 
         #endregion
 
@@ -147,14 +146,21 @@ namespace BookLogic
 
         #endregion
 
-        int IComparable.CompareTo(object obj)
-        {
-            Book b = (Book)obj;
-            return string.Compare(this.Name, b.Name);
-        }
-        
+        /// <summary>
+        /// Returns a string representation
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString() => $"ISBN: {ISBN}, Name: {Name}, Author: {Author}, Publishing House: {PublishingHouse}, Publishing year: {PublishingYear}, Pages number: {PagesNumber}, Price: {Price}";
-        
+
+        /// <summary>
+        /// checks book class objects for equality
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object obj)
         {
             Book book = (Book)obj;
@@ -167,6 +173,5 @@ namespace BookLogic
 
             return false;
         }
-        
     }
 }

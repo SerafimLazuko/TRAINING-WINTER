@@ -3,10 +3,12 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System.Collections;
 using BookLogic.Matches;
-using BookLogic.Sorters;
 
 namespace BookLogic.BookListService
 {
+    /// <summary>
+    /// Provides with API to work with book collection;
+    /// </summary>
     public class BookListService
     {
         #region Class members
@@ -45,6 +47,13 @@ namespace BookLogic.BookListService
 
         #region API
 
+        /// <summary>
+        /// Adds the book in collection books.
+        /// </summary>
+        /// <param name="book">The book.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        /// <exception cref="System.Exception"></exception>
         public bool AddBook(Book book)
         {
             if (book == null || books == null)
@@ -63,6 +72,13 @@ namespace BookLogic.BookListService
             return true;
         }
 
+        /// <summary>
+        /// Removes the book from books collection.
+        /// </summary>
+        /// <param name="book">The book.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        /// <exception cref="System.Exception">no matches found!</exception>
         public bool RemoveBook(Book book)
         {
             if (book == null || books == null)
@@ -83,11 +99,17 @@ namespace BookLogic.BookListService
             }
 
             if (count == 0)
-                throw new Exception("no matches found!");
-
+                return false;
+            
             return true;            
         }
 
+        /// <summary>
+        /// Finds the book in books collection by tag.
+        /// </summary>
+        /// <param name="matcher">The matcher.</param>
+        /// <param name="tag">The tag.</param>
+        /// <returns></returns>
         public Collection<Book> FindBookByTag(IMatcher matcher, string tag)
         {
             Collection<Book> result = new Collection<Book>();
@@ -101,7 +123,11 @@ namespace BookLogic.BookListService
             return result;
         }
 
-        public  void SortBookByTag(IComparer comparer)
+        /// <summary>
+        /// Sorts the book in books collection.
+        /// </summary>
+        /// <param name="comparer">The comparer.</param>
+        public void SortBook(IComparer comparer)
         {
             for (int i = 0; i < Books.Count; i++)
             {
@@ -117,24 +143,58 @@ namespace BookLogic.BookListService
             }
         }
 
+        /// <summary>
+        /// Saves the info about book in file.
+        /// </summary>
+        public void SaveInFile()
+        {
+            try
+            {
+                string path = @"C:\Users\User\source\repos\TRAINING - WINTER\NET.W.2018.Lazuko.08";
+
+                using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.OpenOrCreate)))
+                {
+                    foreach (Book book in books)
+                    {
+                        writer.Write(book.ISBN);
+                        writer.Write(book.Author);
+                        writer.Write(book.Name);
+                        writer.Write(book.PublishingHouse);
+                        writer.Write(book.PublishingYear);
+                        writer.Write(book.PagesNumber);
+                        writer.Write(book.Price);
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Reads the info from file.
+        /// </summary>
+        public void ReadFromFile()
+        {
+            try
+            {
+                string path = @"C:\Users\User\source\repos\TRAINING - WINTER\NET.W.2018.Lazuko.08";
+                using (BinaryReader reader = new BinaryReader(new FileStream(path, FileMode.Open)))
+                {
+                    while (reader.PeekChar() > -1)
+                    {
+                        books.Add(new Book(reader.ReadString(), reader.ReadString(), reader.ReadString(), reader.ReadString(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32()));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
         #endregion
-
-        //public void SaveInFile()
-        //{
-        //    try
-        //    {
-        //        string path = @"C:\Users\User\source\repos\TRAINING - WINTER\NET.W.2018.Lazuko.08";
-
-        //        using (BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.OpenOrCreate)))
-        //        {
-                    
-        //        }
-                 
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //    } 
-        //}
     }
 }
