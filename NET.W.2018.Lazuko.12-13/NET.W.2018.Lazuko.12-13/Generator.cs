@@ -12,24 +12,23 @@ namespace FibbonacciSequence
         /// </summary>
         private static int[] Generate(int numberElements)
         {
-            if (numberElements > 1)
+            if (numberElements < 1)
+                throw new ArgumentException("Number of Elements must be > 1");
+
+            int[] sequence = new int[numberElements];
+
+            sequence[0] = 0;
+            sequence[1] = 1;
+
+            if (numberElements > 2)
             {
-                int[] sequence = new int[numberElements];
-
-                sequence[0] = 0;
-                sequence[1] = 1;
-
-                if (numberElements > 2)
+                for (int i = 2; i < numberElements; i++)
                 {
-                    for (int i = 2; i < numberElements; i++)
-                    {
-                        sequence[i] = GetCurrent(sequence, i);
-                    }
+                    sequence[i] = GetCurrent(sequence, i);
                 }
-
-                return sequence;
             }
-            else throw new ArgumentException("Number of Elements must be > 1");
+
+            return sequence;
         }
 
         /// <summary>
