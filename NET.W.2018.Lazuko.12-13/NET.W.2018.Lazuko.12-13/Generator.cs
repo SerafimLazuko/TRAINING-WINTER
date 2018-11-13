@@ -8,13 +8,15 @@ namespace FibbonacciSequence
     /// </summary>
     public class FSGenerator
     {
+        #region Fields & Prop
+
         private int[] sequence;
 
         public int[] Sequence
         {
             get => sequence;
 
-            set
+            private set
             {
                 if (value.Length >= 2)
                 {
@@ -23,13 +25,22 @@ namespace FibbonacciSequence
                 else throw new ArgumentException("Can't creates Sequence!");
             }
         }
-        
+
+        #endregion
+
+        /// <summary>
+        /// Initializes a new instance by Generate method.
+        /// </summary>
+        /// <param name="numberElements">The number elements.</param>
         public FSGenerator(int numberElements)
         {
             Sequence = new int[numberElements];
             Generate();
         }
 
+        /// <summary>
+        /// Generates Fibbonacci numbers
+        /// </summary>
         private void Generate()
         {
             Sequence[0] = 0;
@@ -41,17 +52,26 @@ namespace FibbonacciSequence
             }
         }
 
+        /// <summary>
+        /// Gets the current number
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <returns></returns>
         private int GetCurrent(int index)
         {
             return Sequence[index - 2] + Sequence[index - 1];
         }
 
-        //private IEnumerator GetEnumerator()
-        //{
-        //    foreach(int c in Sequence)
-        //    {
-        //        yield return c;
-        //    }
-        //}
+        /// <summary>
+        /// Allows you to iterate over the collection
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator GetEnumerator()
+        {
+            foreach (int c in Sequence)
+            {
+                yield return c;
+            }
+        }
     }
 }
