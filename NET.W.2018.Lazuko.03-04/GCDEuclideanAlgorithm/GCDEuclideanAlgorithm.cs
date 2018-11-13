@@ -2,7 +2,7 @@
 using System.Diagnostics;
 
 namespace GCDEuclideanAlgorithm
-{
+{ 
     /// <summary>
     /// Provides API for finding GCD
     /// </summary>
