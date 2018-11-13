@@ -27,7 +27,6 @@ namespace FibbonacciSequence
                     sequence[i] = GetCurrent(sequence, i);
                 }
             }
-
             return sequence;
         }
 
@@ -40,6 +39,6 @@ namespace FibbonacciSequence
         {
             return array[index - 2] + array[index - 1];
         }
-        
+
     }
 }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NET.W.2018.Lazuko.12-13")]
+[assembly: AssemblyTitle("Fibboncci Sequence")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NET.W.2018.Lazuko.12-13")]
+[assembly: AssemblyProduct("Fibboncci Sequence")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c30af2e7-4bbc-4dc4-abd0-f67094b3127d")]
+[assembly: Guid("b11082d0-a6e5-4cae-954d-1d9b7ccd6259")]
 
 // Version information for an assembly consists of the following four values:
 //
