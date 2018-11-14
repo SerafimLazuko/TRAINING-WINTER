@@ -15,7 +15,7 @@ namespace GCDEuclideanAlgorithm
         /// </summary>
         /// <param name="firstNumber">The first number.</param>
         /// <param name="secondNumber">The second number.</param>
-        /// <returns> </returns>
+        /// <returns></returns>
         /// <exception cref="System.ArgumentException"></exception>
         public static int EuclideanAlgorithm(int firstNumber, int secondNumber)
         {
