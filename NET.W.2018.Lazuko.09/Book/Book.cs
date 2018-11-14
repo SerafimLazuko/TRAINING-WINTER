@@ -32,7 +32,7 @@ namespace BookLogic
                 string pattern = @"[0-9]{1}-[0-9]{3}-[0-9]{5}-[0-9]{1}";
 
                 if (Regex.IsMatch(value, pattern))
-                    isbn = value;
+                    isbn = value; 
 
                 else throw new Exception($"The expression {value} does not match the pattern");
             }
