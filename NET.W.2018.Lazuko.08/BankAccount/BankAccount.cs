@@ -5,15 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BankAccount
-{    
+{
+    /// <summary>
+    /// Abstract class BankAccount
+    /// </summary>
     public abstract class BankAccount
     {
         #region Fielsd & Prop
 
-        public Person owner;
-        public string id;
-        public int bonus;
-        public decimal amount;
+        private Person owner;
+        private string id;
+        private int bonus;
+        private decimal amount;
 
         public Person Owner
         {
@@ -81,7 +84,7 @@ namespace BankAccount
         }
 
         #endregion
-
+        
         public void Deposit(int money)
         {
             if (money <= 0)

@@ -3,7 +3,7 @@
 namespace BankAccount
 {
     /// <summary>
-    /// Platinum account type.
+    /// Platinum type of Bank Account
     /// </summary>
     /// <seealso cref="BankAccount.BankAccount" />
     public class Platinum : BankAccount

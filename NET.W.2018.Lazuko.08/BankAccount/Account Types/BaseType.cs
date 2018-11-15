@@ -2,7 +2,10 @@
 
 namespace BankAccount
 {
-
+    /// <summary>
+    /// Base type of Bank Account
+    /// </summary>
+    /// <seealso cref="BankAccount.BankAccount" />
     public class Base : BankAccount
     {
         private const decimal bonusConst = 50;

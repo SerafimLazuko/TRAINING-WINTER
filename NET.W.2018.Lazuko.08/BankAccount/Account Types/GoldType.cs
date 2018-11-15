@@ -3,7 +3,7 @@
 namespace BankAccount
 {
     /// <summary>
-    /// Gold account type.
+    /// Gold type of Bank Account
     /// </summary>
     /// <seealso cref="BankAccount.BankAccount" />
     public class Gold : BankAccount

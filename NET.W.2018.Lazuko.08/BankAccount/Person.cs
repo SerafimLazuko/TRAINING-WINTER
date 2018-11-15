@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BankAccount
 {
+    /// <summary>
+    /// Class Person, provides info about owner of Bank Accounts
+    /// </summary>
     public class Person
     {
         #region Fields & Prop
