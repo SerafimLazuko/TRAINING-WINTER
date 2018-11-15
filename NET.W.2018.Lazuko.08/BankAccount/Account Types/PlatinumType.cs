@@ -1,5 +1,4 @@
 ﻿using System;
-using BankAccount.Service;
 
 namespace BankAccount
 {
@@ -9,63 +8,21 @@ namespace BankAccount
     /// <seealso cref="BankAccount.BankAccount" />
     public class Platinum : BankAccount
     {
-        IAccountService PlatinumAccountService = new BaseAccountService();
+        private const decimal bonusConst = 10;
+        private const decimal legalDebt = -100000;
 
-        /// <summary>
-        /// Allows create new account of this user.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        public override BankAccount CreateAccount(string id)
+        public Platinum() : base() { }
+        public Platinum(string id, Person owner) : base(id, owner) { }
+        public Platinum(string id, Person owner, decimal initialСontribution) : base(id, owner, initialСontribution) { }
+
+        public override int CalculateBonus(decimal money)
         {
-            return new Platinum(id, this.Name, this.Surname);
+            return (int)(Amount / bonusConst + money / bonusConst);
         }
 
-        /// <summary>
-        /// Closes the account.
-        /// </summary>
-        /// <param name="account">The account.</param>
-        public override void CloseAccount(ref BankAccount account)
+        public override bool IsWithdrawAllowed(decimal withdrawed)
         {
-            account = null;
-        }
-
-        /// <summary>
-        /// Makes deposit and replenishes bonus points.
-        /// </summary>
-        /// <param name="money">The money.</param>
-        public override void Deposit(int money)
-        {
-            Amount += money;
-            Bonus += PlatinumAccountService.CalculateBonus(money);
-        }
-
-        /// <summary>
-        /// Withdraws the money.
-        /// </summary>
-        /// <param name="money">The money.</param>
-        /// <exception cref="System.Exception">Insufficient funds to complete the transaction.</exception>
-        public override void Withdraw(int money)
-        {
-            if (PlatinumAccountService.IsWithdrawAllowed(money, Amount))
-            {
-                Amount -= money;
-                Bonus -= PlatinumAccountService.CalculateBonus(money);
-            }
-            else
-                throw new Exception("Insufficient funds to complete the transaction.");
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Platinum"/> class.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="surname"></param>
-        private Platinum(string id, string name, string surname) : base(id, name, surname)
-        {
-            Bonus = 0;
-            Amount = 0;
+            return (Math.Abs(legalDebt) + Amount < withdrawed) ? false : true;
         }
     }
 }
