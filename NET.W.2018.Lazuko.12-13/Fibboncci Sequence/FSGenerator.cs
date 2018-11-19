@@ -1,44 +1,41 @@
 ﻿using System;
+using System.Numerics;
+using System.Collections.Generic;
 
 namespace FibbonacciSequence
 {
     /// <summary>
     /// Provides API for creating  
     /// </summary>
-    public static class FSGenerator
+    public class FSGenerator
     {
         /// <summary>
         /// Generates Fibbonacci numbers
         /// </summary>
-        private static int[] Generate(int numberElements)
+        public static IEnumerable<BigInteger> Generate(int numberElements)
         {
             if (numberElements < 1)
                 throw new ArgumentException("Number of Elements must be > 1");
 
-            int[] sequence = new int[numberElements];
+            yield return 0;
+            yield return 1;
 
-            sequence[0] = 0;
-            sequence[1] = 1;
+            BigInteger current = 1;
+            BigInteger currentNext = 1;
 
-            if (numberElements > 2)
+            while (numberElements > 2)
             {
-                for (int i = 2; i < numberElements; i++)
-                {
-                    sequence[i] = GetCurrent(sequence, i);
-                }
+                yield return current;
+
+                BigInteger temp = current;
+
+                current = currentNext + current;
+
+                currentNext = temp;
+
+                numberElements--;
             }
-            return sequence;
         }
-
-        /// <summary>
-        /// Gets the current number
-        /// </summary>
-        /// <param name="index">The index.</param>
-        /// <returns></returns>
-        private static int GetCurrent(int[] array, int index)
-        {
-            return array[index - 2] + array[index - 1];
-        }
-
+        
     }
 }
