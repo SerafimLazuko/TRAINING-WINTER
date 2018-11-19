@@ -15,7 +15,7 @@ namespace FibbonacciSequence
         public static IEnumerable<BigInteger> Generate(int numberElements)
         {
             if (numberElements < 1)
-                throw new ArgumentException("Number of Elements must be > 1");
+                throw new ArgumentException("Number of Elements must be >= 1");
 
             yield return 0;
             yield return 1;
