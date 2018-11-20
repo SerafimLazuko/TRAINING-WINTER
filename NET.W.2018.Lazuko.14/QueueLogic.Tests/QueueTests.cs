@@ -13,13 +13,13 @@ namespace QueueLogic.Tests
         Node<string> node2 = new Node<string>("node2");
         Node<string> node3 = new Node<string>("node3");
 
-        List<Node<string>> list = new List<Node<string>>(3);
+        Queue<string> queue = new Queue<string>();
 
         void Foo()
         {
-            list.Add(node1);
-            list.Add(node2);
-            list.Add(node3);
+            queue.Enqueue(node1.Data);
+            queue.Enqueue(node2.Data);
+            queue.Enqueue(node3.Data);
         }
 
         [TestMethod]
@@ -27,13 +27,11 @@ namespace QueueLogic.Tests
         {
             Foo();
 
-            Queue<string> queue = new Queue<string>(list);
-            
             queue.Enqueue("added node 4");
 
-            string actual = queue.Nodes[3].Data;
+            int actual = queue.Count;
 
-            string expected = "added node 4";
+            int expected = 4;
 
             Assert.AreEqual(actual, expected);
         }
@@ -42,9 +40,7 @@ namespace QueueLogic.Tests
         public void DequeueTest()
         {
             Foo();
-
-            Queue<string> queue = new Queue<string>(list);
-            
+                        
             string actual = queue.Dequeue();
 
             string expected = "node1";
@@ -56,8 +52,6 @@ namespace QueueLogic.Tests
         public void PeekTest_AfterDequeue()
         {
             Foo();
-
-            Queue<string> queue = new Queue<string>(list);
 
             queue.Dequeue();
 
