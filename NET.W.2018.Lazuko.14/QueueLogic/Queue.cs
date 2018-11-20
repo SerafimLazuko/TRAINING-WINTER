@@ -14,52 +14,23 @@ namespace QueueLogic
     {
         #region Fields & Prop
 
-        private List<Node<T>> nodes;
+        private Node<T> head;
 
-        internal Node<T> head;
+        private Node<T> tail;
 
-        internal Node<T> tail;
+        private int count;
 
-        public List<Node<T>> Nodes
+        public int Count
         {
-            get { return nodes; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
-
-                for (int i = 0; i < value.Count; i++)
-                {
-                    nodes.Add(value[i]);
-
-                    if (i == 0 && Count == 1)
-                    {
-                        head = value[i];
-                        head.Next = value[i + 1];
-                    }
-
-                    if (i > 0 && i < value.Count - 1)
-                        nodes[i].Next = value[i + 1];
-
-                    if (i == value.Count - 1)
-                        tail = value[i];
-                }
-            }
+            get { return count; }
+            private set { count = value; }
         }
 
-        public int Count { get { return nodes.Count; } }
+        public Node<T> Head { get => head; }
+
+        public Node<T> Tail { get => tail; }
 
         #endregion
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Queue{T}"/> class.
-        /// </summary>
-        /// <param name="array">The array of Nodes.</param>
-        public Queue(List<Node<T>> array)
-        {
-            nodes = new List<Node<T>>();
-            Nodes = array;
-        }
 
         #region Operations with Queue
 
@@ -78,21 +49,27 @@ namespace QueueLogic
         /// <exception cref="System.ArgumentNullException"></exception>
         public void Enqueue(T data)
         {
-            if (data == null)
-                throw new ArgumentNullException();
-
-            Node<T> node = new Node<T>(data);
-
-            Node<T> temp = tail;
-
-            tail = node;
-
-            nodes.Add(node);
+            Node<T> node = new Node<T>(data) ?? throw new ArgumentNullException(nameof(data));
 
             if (Count == 0)
-                head = tail;
-            else
-                temp.Next = tail;
+            {
+                head = node;
+                tail = node;
+                Count++;
+                return;
+            }
+
+            if (Count == 1)
+            {
+                head.Next = node;
+                tail = node;
+                Count++;
+                return;
+            }
+
+            tail.Next = node;
+            tail = node;
+            Count++;
         }
 
         /// <summary>
@@ -107,11 +84,16 @@ namespace QueueLogic
 
             T output = head.Data;
 
-            Node<T> temp = head.Next;
+            if (Count == 1)
+            {
+                Count--;
+                head = null;
+                tail = null;
+                return output;
+            }
 
-            nodes.Remove(head);
-
-            head = temp;
+            head = head.Next;
+            Count--;
 
             return output;
         }
@@ -124,7 +106,7 @@ namespace QueueLogic
         public T Peek()
         {
             if (Count == 0)
-                throw new InvalidOperationException();
+                return default(T);
 
             return head.Data;
         }
@@ -138,12 +120,50 @@ namespace QueueLogic
 
             while (Count > 0)
             {
-                int i = Count;
-                nodes.RemoveAt(--i);
+                Node<T> temp = head.Next;
+                head = null;
+                head = temp;
+                Count--;
             }
 
-            head = null;
             tail = null;
+        }
+
+        #endregion
+
+        #region Ctors
+
+        public Queue() { }
+
+        public Queue(int numberElements)
+        {
+            while(numberElements > 0)
+            {
+                Enqueue(default(T));
+                Count++;
+            }
+        }
+
+        public Queue(int numberElements, T data)
+        {
+            while (numberElements > 0)
+            {
+                Enqueue(data);
+                Count++;
+            }
+        }
+
+        public Queue(Queue<T> queue)
+        {
+            if (queue == null)
+                throw new ArgumentNullException(nameof(queue));
+
+            while(queue.Count > 0)
+            {
+                this.Enqueue(queue.Head.Data);
+                
+                queue.Dequeue();
+            }
         }
 
         #endregion
@@ -152,7 +172,7 @@ namespace QueueLogic
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new QueueIterator<T>(this);
+            return new QueueEnumerator<T>(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

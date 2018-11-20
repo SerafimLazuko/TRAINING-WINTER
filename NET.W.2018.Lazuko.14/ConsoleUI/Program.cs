@@ -14,44 +14,43 @@ namespace ConsoleUI
             Node<string> node1 = new Node<string>("node1");
             Node<string> node2 = new Node<string>("node2");
             Node<string> node3 = new Node<string>("node3");
+            
 
-            List<Node<string>> list = new List<Node<string>>(3);
+            QueueLogic.Queue<string> queue = new QueueLogic.Queue<string>();
 
-            list.Add(node1);
-            list.Add(node2);
-            list.Add(node3);
+            queue.Enqueue(node1.Data);
+            queue.Enqueue(node2.Data);
+            queue.Enqueue(node3.Data);
 
-            QueueLogic.Queue<string> queue = new QueueLogic.Queue<string>(list);
-
-            foreach (Node<string> node in queue.Nodes)
+            foreach (var node in queue)
             {
-                Console.WriteLine(node.Data);
+                Console.WriteLine(node);
             }
 
             Console.ReadKey();
 
-            Node<string> node6 = new Node<string>("added node 4");
+            Node<string> node4 = new Node<string>("added node 4");
 
-            queue.Enqueue("added node 4");
+            queue.Enqueue(node4.Data);
 
             Console.WriteLine();
 
-            foreach (Node<string> node in queue.Nodes)
+            foreach (var node in queue)
             {
-                Console.WriteLine(node.Data);
+                Console.WriteLine(node);
             }
 
             Console.ReadKey();
 
             Console.WriteLine();
 
-            Console.WriteLine("удаление элемента - " +  queue.Dequeue()) ;
+            Console.WriteLine("удаление элемента - " + queue.Dequeue());
 
             Console.WriteLine();
 
-            foreach (Node<string> node in queue.Nodes)
+            foreach (var node in queue)
             {
-                Console.WriteLine(node.Data);
+                Console.WriteLine(node);
             }
 
             Console.ReadKey();
