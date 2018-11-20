@@ -17,18 +17,12 @@ namespace QueueLogic
         private Node<T> head;
 
         private Node<T> tail;
+                
+        public int Count { get; private set; }
 
-        private int count;
+        public Node<T> Head { get => new Node<T>(head.Data); }
 
-        public int Count
-        {
-            get { return count; }
-            private set { count = value; }
-        }
-
-        public Node<T> Head { get => head; }
-
-        public Node<T> Tail { get => tail; }
+        public Node<T> Tail { get => new Node<T>(tail.Data); }
 
         #endregion
 
@@ -158,11 +152,9 @@ namespace QueueLogic
             if (queue == null)
                 throw new ArgumentNullException(nameof(queue));
 
-            while(queue.Count > 0)
+            foreach(var node in queue)
             {
-                this.Enqueue(queue.Head.Data);
-                
-                queue.Dequeue();
+                Enqueue(node);
             }
         }
 
