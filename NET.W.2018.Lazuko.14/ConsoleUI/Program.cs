@@ -11,55 +11,26 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            Node<string> node1 = new Node<string>("node1");
-            Node<string> node2 = new Node<string>("node2");
-            Node<string> node3 = new Node<string>("node3");
-            
-
             QueueLogic.Queue<string> queue = new QueueLogic.Queue<string>();
 
-            queue.Enqueue(node1.Data);
-            queue.Enqueue(node2.Data);
-            queue.Enqueue(node3.Data);
+            queue.Enqueue("added1");
+            queue.Enqueue("added2");
+            queue.Enqueue("added3");
+            queue.Enqueue("added4");
+            queue.Enqueue("added5");
+            queue.Enqueue("added6");
+            queue.Enqueue("added7");
 
-            foreach (var node in queue)
+            Console.WriteLine(queue.Count.ToString() + " elements in queue; ");
+            Console.ReadKey();
+
+            foreach(var elem in queue)
             {
-                Console.WriteLine(node);
+                Console.WriteLine("Plugging out " + elem);
             }
 
             Console.ReadKey();
 
-            Node<string> node4 = new Node<string>("added node 4");
-
-            queue.Enqueue(node4.Data);
-
-            Console.WriteLine();
-
-            foreach (var node in queue)
-            {
-                Console.WriteLine(node);
-            }
-
-            Console.ReadKey();
-
-            Console.WriteLine();
-
-            Console.WriteLine("удаление элемента - " + queue.Dequeue());
-
-            Console.WriteLine();
-
-            foreach (var node in queue)
-            {
-                Console.WriteLine(node);
-            }
-
-            Console.ReadKey();
-
-            Console.WriteLine();
-
-            Console.WriteLine("result of Peek - " + queue.Peek());
-
-            Console.ReadKey();
         }
     }
 }

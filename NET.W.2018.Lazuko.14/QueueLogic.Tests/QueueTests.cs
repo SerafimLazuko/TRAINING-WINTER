@@ -9,17 +9,15 @@ namespace QueueLogic.Tests
     [TestClass]
     public class QueueLogicTests
     {
-        Node<string> node1 = new Node<string>("node1");
-        Node<string> node2 = new Node<string>("node2");
-        Node<string> node3 = new Node<string>("node3");
-
         Queue<string> queue = new Queue<string>();
 
         void Foo()
         {
-            queue.Enqueue(node1.Data);
-            queue.Enqueue(node2.Data);
-            queue.Enqueue(node3.Data);
+            queue.Enqueue("added1");
+            queue.Enqueue("added2");
+            queue.Enqueue("added3");
+            queue.Enqueue("added4");
+            queue.Enqueue("added5");
         }
 
         [TestMethod]
@@ -27,12 +25,12 @@ namespace QueueLogic.Tests
         {
             Foo();
 
-            queue.Enqueue("added node 4");
+            queue.Enqueue("added6");
 
             int actual = queue.Count;
 
-            int expected = 4;
-
+            int expected = 6;
+            
             Assert.AreEqual(actual, expected);
         }
 
@@ -40,11 +38,11 @@ namespace QueueLogic.Tests
         public void DequeueTest()
         {
             Foo();
-                        
+
             string actual = queue.Dequeue();
 
-            string expected = "node1";
-
+            string expected = "added1";
+            
             Assert.AreEqual(actual, expected);
         }
 
@@ -57,8 +55,22 @@ namespace QueueLogic.Tests
 
             string actual = queue.Peek();
 
-            string expected = "node2";
+            string expected = "added2";
+            
+            Assert.AreEqual(actual, expected);
+        }
 
+        [TestMethod]
+        public void ClearTest_ClearsQueue()
+        {
+            Foo();
+
+            queue.Clear();
+
+            bool actual = queue.IsEmpty;
+
+            bool expected = true;
+            
             Assert.AreEqual(actual, expected);
         }
     }

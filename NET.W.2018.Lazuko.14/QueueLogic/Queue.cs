@@ -14,16 +14,15 @@ namespace QueueLogic
     {
         #region Fields & Prop
 
-        private Node<T> head;
-
-        private Node<T> tail;
-                
+        private T[] queue;
+        private int capacity;
+        private const int defaultCapacity = 8;
+        private int first;
+        private int last;
+        private int version;
+        
         public int Count { get; private set; }
-
-        public Node<T> Head { get => new Node<T>(head.Data); }
-
-        public Node<T> Tail { get => new Node<T>(tail.Data); }
-
+        
         #endregion
 
         #region Operations with Queue
@@ -32,38 +31,31 @@ namespace QueueLogic
         /// Gets a value indicating whether this instance is empty.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is empty; otherwise, <c>false</c>.
+        ///   <c>true</c> if Count == 0; otherwise, <c>false</c>.
         /// </value>
         public bool IsEmpty { get { return Count == 0; } }
 
         /// <summary>
-        /// Enqueues the specified data in thr end of queue.
+        /// Enqueues the specified data in the end of queue.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <exception cref="System.ArgumentNullException"></exception>
         public void Enqueue(T data)
         {
-            Node<T> node = new Node<T>(data) ?? throw new ArgumentNullException(nameof(data));
-
             if (Count == 0)
             {
-                head = node;
-                tail = node;
-                Count++;
+                queue[0] = data;
+                ++Count;
+                ++version;
                 return;
             }
 
-            if (Count == 1)
-            {
-                head.Next = node;
-                tail = node;
-                Count++;
-                return;
-            }
+            if (IsFull()) Resize();
 
-            tail.Next = node;
-            tail = node;
-            Count++;
+            queue[(++last) % capacity] = data;
+
+            ++Count;
+
+            ++version;
         }
 
         /// <summary>
@@ -73,23 +65,19 @@ namespace QueueLogic
         /// <exception cref="System.InvalidOperationException"></exception>
         public T Dequeue()
         {
-            if (Count == 0)
-                throw new InvalidOperationException();
+            if (IsEmpty) throw new InvalidOperationException("Queue is empty!");
 
-            T output = head.Data;
+            T output = queue[(first) ];
 
-            if (Count == 1)
-            {
-                Count--;
-                head = null;
-                tail = null;
-                return output;
-            }
+            queue[(first) % capacity] = default(T);
 
-            head = head.Next;
-            Count--;
+            --Count;
 
-            return output;
+            ++first;
+
+            ++version;
+
+            return output; 
         }
 
         /// <summary>
@@ -97,67 +85,73 @@ namespace QueueLogic
         /// </summary>
         /// <returns>First element Data value</returns>
         /// <exception cref="System.InvalidOperationException"></exception>
-        public T Peek()
-        {
-            if (Count == 0)
-                return default(T);
-
-            return head.Data;
-        }
-
+        public T Peek() => queue[(first) % capacity];
+        
         /// <summary>
         /// Clears this instance.
         /// </summary>
         public void Clear()
         {
-            if (IsEmpty) return;
+            queue = null;
+            first = 0;
+            last = 0;
+            capacity = 0;
+            Count = 0;
+        }
+        
+        private bool IsFull() => first == (last + 1) % capacity;
 
-            while (Count > 0)
+        private void Resize()
+        {
+            T[] bigger = new T[capacity * 2];
+
+            Count = 0;
+
+            for (int i = 0; i < queue.Length; i++)
             {
-                Node<T> temp = head.Next;
-                head = null;
-                head = temp;
-                Count--;
+                bigger[i] = queue[(first++) % capacity];
+                last = i;
+                ++Count;
             }
 
-            tail = null;
+            queue = bigger;
+            capacity *= 2;
+            first = 0;
         }
 
         #endregion
 
         #region Ctors
 
-        public Queue() { }
-
-        public Queue(int numberElements)
+        public Queue()
         {
-            while(numberElements > 0)
+            queue = new T[defaultCapacity];
+            capacity = defaultCapacity;
+            first = 0;
+            version = 0;
+            Count = 0;
+        }
+
+        public Queue(int capacity) : this()
+        {
+            queue = new T[capacity];
+            this.capacity = capacity;
+        }
+
+        public Queue(int capacity, T data) : this(capacity)
+        {
+            if (data.Equals(default(T)))
+                return;
+
+            for (int i = 0; i < this.capacity; i++)
             {
-                Enqueue(default(T));
+                queue[i] = data;
                 Count++;
             }
+
+            last = queue.Length - 1;
         }
-
-        public Queue(int numberElements, T data)
-        {
-            while (numberElements > 0)
-            {
-                Enqueue(data);
-                Count++;
-            }
-        }
-
-        public Queue(Queue<T> queue)
-        {
-            if (queue == null)
-                throw new ArgumentNullException(nameof(queue));
-
-            foreach(var node in queue)
-            {
-                Enqueue(node);
-            }
-        }
-
+        
         #endregion
 
         #region IEnumerable implementation
@@ -170,6 +164,66 @@ namespace QueueLogic
         IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IEnumerator
+
+        struct QueueEnumerator<T> : IEnumerator<T>
+        {
+            #region Private fields
+
+            private readonly Queue<T> queue;
+            
+            private int version;
+            private int index;
+            private int step;
+
+            #endregion
+
+            public QueueEnumerator(Queue<T> queue)
+            {
+                this.queue = queue ?? throw new ArgumentNullException(nameof(queue));
+                
+                version = queue.version;
+
+                index = queue.first;
+
+                step = 0;
+            }
+
+            #region Iterator implementation
+
+            public T Current
+            {
+                get
+                {
+                    return queue.queue[(index++) % queue.capacity];
+                }
+            }
+
+            object IEnumerator.Current
+            {
+                get { return (object)Current; }
+            }
+
+            public bool MoveNext()
+            {
+                if (queue.version != version)
+                    throw new InvalidOperationException("collection was changed!");
+
+                return step++ < queue.Count;
+            }
+
+            public void Reset()
+            {
+                index = --queue.first;
+            }
+
+            public void Dispose() { }
+
+            #endregion
         }
 
         #endregion
