@@ -16,7 +16,7 @@ namespace BinarySearchTree
         #region Fields & Prop
 
         private Node TreeRoot;
-
+        
         private IComparer<T> comparer;
 
         public IComparer<T> Comparer
@@ -355,20 +355,24 @@ namespace BinarySearchTree
         /// </summary>
         private class Node
         {
+            private Node parent;
+            private Node left;
+            private Node right;
+
             public Node Parent
             {
-                get => Parent;
-                set { Parent = value; }
+                get => parent;
+                set { parent = value; }
             }
             public Node Left
             {
-                get => Left;
-                set{ Left = value;}
+                get => left;
+                set{ left = value;}
             }
             public Node Right
             {
-                get => Right;
-                set { Right = value; }
+                get => right;
+                set { right = value; }
             }
 
             public T data;
