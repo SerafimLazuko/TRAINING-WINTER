@@ -12,7 +12,7 @@ namespace Timer
     /// </summary>
     public class Timer
     {
-        public EventHandler<TimerInfoEventArgs> TimerOuted;
+        public event EventHandler<TimerInfoEventArgs> TimerOuted;
 
         /// <summary>
         /// Starts the timer. Then raises event.
