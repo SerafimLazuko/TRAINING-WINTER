@@ -43,7 +43,7 @@ namespace BinarySearch
         private static int? BinarySearch<T>(T[] array, T value, int first, int last, Comparison<T> comparer)
         {
             if (array == null)
-                throw new ArgumentNullException(nameof(array));
+                throw new NullReferenceException(nameof(array));
 
             if (array.Length < 2)
                 throw new InvalidOperationException("Array length must be >= 2!");
@@ -54,7 +54,7 @@ namespace BinarySearch
             {
                 int mid = (left + right) / 2;
 
-                if (left - mid == 0) return null;
+                if (right - mid == 0) return null;
 
                 int comparisonResult = comparer(value, array[mid]);
 
