@@ -8,15 +8,13 @@ namespace No5
 {
     public class ToHtmlVisitor : DocumentPartVisitor
     {
-        public string output;
+        protected override string Visit(BoldText boldText) 
+            => "<b>" + boldText.Text + "</b>";
 
-        protected override void Visit(BoldText boldText) 
-            => output = "<b>" + boldText.Text + "</b>";
+        protected override string Visit(Hyperlink hyperLink) 
+            => "<a href=\"" + hyperLink.Url + "\">" + hyperLink.Text + "</a>";
 
-        protected override void Visit(Hyperlink hyperLink) 
-            => output = "<a href=\"" + hyperLink.Url + "\">" + hyperLink.Text + "</a>";
-
-        protected override void Visit(PlainText plainText) 
-            => output = plainText.Text;
+        protected override string Visit(PlainText plainText) 
+            => plainText.Text;
     }
 }

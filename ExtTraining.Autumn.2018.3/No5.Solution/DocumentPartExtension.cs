@@ -8,46 +8,22 @@ namespace No5.Solution
 {
     public static class DocumentPartExtension
     {
-        public static string ToLaTexOutput(this Document document)
-        {
-            string output = string.Empty;
-
-            var visitor = new ToLaTexVisitor();
-
-            foreach (DocumentPart part in document.parts)
-            {
-                visitor.DynamicVisit(part);
-                output += $"{visitor.output}\n";
-            }
-
-            return output;
-        }
+        public static string ToLaTexOutput(this Document document) 
+            => Output(document, new ToLaTexVisitor());
 
         public static string ToHtmlOutlut(this Document document)
-        {
-            string output = string.Empty;
-
-            var visitor = new ToHtmlVisitor();
-
-            foreach (DocumentPart part in document.parts)
-            {
-                visitor.DynamicVisit(part);
-                output += $"{visitor.output}\n";
-            }
-
-            return output;
-        }
+            => Output(document, new ToHtmlVisitor());
 
         public static string ToPlainTextOutput(this Document document)
+            => Output(document, new ToPlainTextVisitor());
+            
+        private static string Output(Document document, DocumentPartVisitor visitor)
         {
             string output = string.Empty;
-
-            var visitor = new ToPlainTextVisitor();
-
+            
             foreach (DocumentPart part in document.parts)
             {
-                visitor.DynamicVisit(part);
-                output += $"{visitor.output}\n";
+                output += $"{visitor.DynamicVisit(part)}\n";
             }
 
             return output;
